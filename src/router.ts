@@ -6,9 +6,10 @@ import { components, hooks, utils } from '@generouted/react-router/client'
 export type Path =
   | `/`
   | `/auth`
+  | `/dashboard/:accountId`
 
 export type Params = {
-  
+  '/dashboard/:accountId': { accountId: string }
 }
 
 export type ModalPath = never
