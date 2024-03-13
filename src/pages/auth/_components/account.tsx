@@ -1,12 +1,19 @@
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
+import { useNavigate } from '../../../router';
 
 export type AccountProps = {
     fullName?: string;
     profilePic?: string;
     email?: string;
+    id: number;
 };
 
-export default function Account({ fullName, profilePic, email }: AccountProps) {
+export default function Account({ fullName, profilePic, email, id }: AccountProps) {
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate('/dashboard/:accountId', {params: { accountId: id.toString() }})
+    }
+
     return (
         <Flex
             flexDir={'row'}
@@ -21,6 +28,7 @@ export default function Account({ fullName, profilePic, email }: AccountProps) {
             _hover={{
                 bgColor: "gray.300"
             }}
+            onClick={handleClick}
         >
             <Avatar name={fullName} src={profilePic} />
             <Flex flexDir={"column"} justifyContent={"center"}>

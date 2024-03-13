@@ -76,6 +76,7 @@ export default function Auth() {
                                     email={account.email}
                                     fullName={account.name}
                                     key={account.id}
+                                    id={account.id}
                                 />
                             ))
                         )}
