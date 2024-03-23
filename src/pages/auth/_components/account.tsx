@@ -1,14 +1,14 @@
-import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
-import { useNavigate } from '../../../router';
+import {Avatar, Flex, Text} from '@chakra-ui/react';
+import { useNavigate } from '@/router';
 
 export type AccountProps = {
     fullName?: string;
     profilePic?: string;
-    email?: string;
+    number?: number;
     id: number;
 };
 
-export default function Account({ fullName, profilePic, email, id }: AccountProps) {
+export default function Account({ fullName, profilePic, number, id }: AccountProps) {
     const navigate = useNavigate();
     const handleClick = () => {
         navigate('/dashboard/:accountId', {params: { accountId: id.toString() }})
@@ -33,7 +33,7 @@ export default function Account({ fullName, profilePic, email, id }: AccountProp
             <Avatar name={fullName} src={profilePic} />
             <Flex flexDir={"column"} justifyContent={"center"}>
                 <Text>{fullName}</Text>
-                <Text fontSize={"xs"}>{email}</Text>
+                <Text fontSize={"xs"}>{number}</Text>
             </Flex>
         </Flex>
     );
