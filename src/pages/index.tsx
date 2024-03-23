@@ -1,4 +1,4 @@
-import {useNavigate} from "../router.ts";
+import {useNavigate} from "@/router.ts";
 import {useEffect} from "react";
 
 function Home() {
