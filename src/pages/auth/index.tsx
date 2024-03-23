@@ -5,17 +5,28 @@ import {
     Heading,
     Image,
     Spinner,
-    Text,
+    Text, useDisclosure,
 } from '@chakra-ui/react';
 import Account from './_components/account';
-import { useQuery } from '@tanstack/react-query';
-import { getAllAccounts } from '../../api/account';
+import { useQuery,  } from '@tanstack/react-query';
+import { getAllAccounts } from '@/api/account';
+import NewAccountModal from "@/pages/auth/_components/newAccountModal.tsx";
+
+export const Catch = () => <Flex
+    w={"100%"}
+    h={"100%"}
+    justifyContent={"center"}
+    alignItems={"center"}
+>
+    <Heading textAlign={"center"}>Something went wrong :( <br/> Try reload your page</Heading>
+</Flex>
 
 export default function Auth() {
     const { data, error, isLoading } = useQuery({
         queryKey: ['allAccounts'],
         queryFn: getAllAccounts,
     });
+    const {isOpen, onOpen, onClose} = useDisclosure()
 
     return (
         <Flex
@@ -24,9 +35,6 @@ export default function Auth() {
             justifyContent={'center'}
             alignItems={'center'}
             flexDir={"column"}
-            //   bgImage={'/bg-banner.webp'}
-            //   bgRepeat={"no-repeat"}
-            //   bgSize={"cover"}
         >
             <Flex
                 bgColor={'gray.100'}
@@ -71,14 +79,14 @@ export default function Auth() {
                         ) : error ? (
                             error.toString()
                         ) : (
-                            data?.map((account) => (
+                            data ? data.map((account) => (
                                 <Account
-                                    email={account.email}
-                                    fullName={account.name}
+                                    number={account.id}
+                                    fullName={`${account.firstname} ${account.lastname}`}
                                     key={account.id}
                                     id={account.id}
                                 />
-                            ))
+                            )) : data
                         )}
                     </Flex>
                     <Flex
@@ -89,7 +97,8 @@ export default function Auth() {
                         alignItems={'center'}
                     >
                         <Text>Don't have an account yet?</Text>
-                        <Button colorScheme="blue">Create an account</Button>
+                        <Button colorScheme="blue" onClick={onOpen}>Create an account</Button>
+                        <NewAccountModal isOpen={isOpen} onClose={onClose}/>
                     </Flex>
                 </Flex>
             </Flex>
