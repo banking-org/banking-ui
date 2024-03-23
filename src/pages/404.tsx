@@ -1,4 +1,4 @@
-import { Flex, Text, Heading } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 
 export default function NotFound() {
     return <Flex w={"100%"} h={"100%"} justifyContent={"center"} alignItems={"center"}>
