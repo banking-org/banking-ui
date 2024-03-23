@@ -7,9 +7,13 @@ export type Path =
   | `/`
   | `/auth`
   | `/dashboard/:accountId`
+  | `/dashboard/:accountId/history`
+  | `/dashboard/:accountId/transfers`
 
 export type Params = {
   '/dashboard/:accountId': { accountId: string }
+  '/dashboard/:accountId/history': { accountId: string }
+  '/dashboard/:accountId/transfers': { accountId: string }
 }
 
 export type ModalPath = never
