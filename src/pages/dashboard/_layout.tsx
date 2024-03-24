@@ -15,7 +15,7 @@ export default function DashboardLayout() {
             <GridItem area={"nav"}>
                 <Navigation />
             </GridItem>
-            <GridItem area={"main"} bgColor={"gray.100"} borderTopStartRadius={'20px'}>
+            <GridItem area={"main"} bgColor={"gray.100"} borderTopStartRadius={'20px'} overflow={"auto"}>
                 <Outlet/>
             </GridItem>
         </Grid>
