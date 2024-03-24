@@ -33,7 +33,7 @@ export default function SideStat({accountId, show}: SideStatProps) {
         </Stat>
         <StatGroup>
             <Stat>
-                <StatLabel><StatArrow type='increase'/>Income</StatLabel>
+                <StatLabel><StatArrow type='increase' transform={"rotate(180deg)"}/>Income</StatLabel>
                 <StatNumber noOfLines={1}>345,670 $</StatNumber>
                 <StatHelpText>
                     This month
@@ -41,7 +41,7 @@ export default function SideStat({accountId, show}: SideStatProps) {
             </Stat>
 
             <Stat>
-                <StatLabel><StatArrow type='decrease'/>Outcome</StatLabel>
+                <StatLabel><StatArrow type='decrease' transform={"rotate(180deg)"}/>Outcome</StatLabel>
                 <StatNumber>45 $</StatNumber>
             </Stat>
         </StatGroup>
