@@ -19,6 +19,7 @@ import {useState} from "react";
 import {useForm} from "react-hook-form";
 import {createAccount, NewAccount} from "@/api/account.ts";
 import {useNavigate} from "@/router.ts";
+import {SingleDatepicker} from "chakra-dayzed-datepicker";
 
 type NewAccountModalProps = {
     isOpen: boolean;
@@ -31,6 +32,7 @@ export default function NewAccountModal({isOpen, onClose}: NewAccountModalProps)
     const navigate = useNavigate();
     const [isLoading, setLoading] = useState(false);
     const toast = useToast()
+    const [date, setDate] = useState<Date>();
 
 
     const submitHandler = (value: NewAccount) => {
@@ -87,13 +89,16 @@ export default function NewAccountModal({isOpen, onClose}: NewAccountModalProps)
                     </Flex>
                     <Flex direction={"column"} my={2}>
                         <Text ml={2} color={"gray.400"}>Birthdate</Text>
-                        <Input
-                            type={"date"}
-                            placeholder={"Birthdate"}
-                            {...register("birthdate", {
-                                required: true,
-                            })}
-                            isInvalid={!!formState.errors.birthdate}
+                        <SingleDatepicker
+                            onDateChange={(date) => {setDate(date)}}
+                            date={date}
+                            propsConfigs={{
+                                inputProps: {
+                                    placeholder: "Birthdate",
+                                    ...register("birthdate", {required: true}),
+                                    isInvalid: !!formState.errors.birthdate
+                                }
+                            }}
                         />
                     </Flex>
                     <Flex direction={"column"} my={2}>
