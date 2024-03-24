@@ -1,14 +1,34 @@
-import {getAccountById} from "@/api/account";
 import {useParams} from "@/router";
-import {Box, Flex, Heading, Stat, StatLabel, StatNumber} from "@chakra-ui/react";
-import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {Line} from "react-chartjs-2";
+import {
+    Box,
+    Flex,
+    Heading,
+    IconButton,
+    Stat,
+    StatLabel,
+    StatNumber, Tab,
+    Table,
+    TableContainer, TabList, TabPanel, TabPanels, Tabs,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tooltip,
+    Tr, useDisclosure
+} from "@chakra-ui/react";
+import {useQuery} from "@tanstack/react-query";
 import "chart.js/auto";
 import AccountGraph from "@/pages/dashboard/[accountId]/_components/accountGraph.tsx";
-import {getBalanceByAccountId} from "@/api/balance.ts";
+import {getAllTransactions, getBalanceByAccountId} from "@/api/balance.ts";
+import {Doughnut} from "react-chartjs-2";
+import {IoMdAddCircleOutline} from "react-icons/io";
+import TransactionModal from "@/pages/dashboard/[accountId]/_components/transactionModal.tsx";
+import TransactionTable from "@/pages/dashboard/[accountId]/_components/transactionTable.tsx";
 
 export function Catch() {
-    return <Heading>An error occured :(</Heading>;
+    return <Flex justifyContent={"center"} alignItems={"center"} w={"100%"} h={"100%"}>
+        <Heading textAlign={"center"}>An error occured :( <br/> Try to reload the page</Heading>;
+    </Flex>
 }
 
 export default function Dashboard() {
@@ -18,24 +38,87 @@ export default function Dashboard() {
         queryFn: () => getBalanceByAccountId(+accountId),
     });
 
-    return (
-        <Flex w={"100%"} p={8}>
-            <Flex direction={"column"} width={"100%"}>
-                <Stat>
-                    <StatLabel as={Heading}>
-                        Actual balance
-                    </StatLabel>
-                    <StatNumber fontSize={"70px"}>
-                        {data?.currentBalance || "0"} $
-                    </StatNumber>
-                </Stat>
-                <Flex gap={5} w={"100%"} my={25}>
-                    <AccountGraph accountId={+accountId} graphType={"income"}/>
-                    <AccountGraph accountId={+accountId} graphType={"outcome"}/>
-                </Flex>
 
+
+    const {isOpen, onOpen, onClose} = useDisclosure()
+
+    return (
+        <Flex position={"relative"} direction={"column"} w={"100%"} p={8} h={"100vh"}>
+            <Stat>
+                <StatLabel as={Heading} fontWeight={"bold"}>
+                    Actual balance
+                </StatLabel>
+                <StatNumber fontSize={"70px"}>
+                    {data?.currentBalance || "0"} $
+                </StatNumber>
+            </Stat>
+            <Flex gap={5} w={"100%"} my={25}>
+                <AccountGraph accountId={+accountId} graphType={"income"}/>
+                <AccountGraph accountId={+accountId} graphType={"outcome"}/>
             </Flex>
-            <Flex></Flex>
+            <Box w={"100%"}>
+                <Heading>
+                    Transaction summary
+                </Heading>
+                <Flex w={"100%"} h={"100%"} justifyContent={"space-between"}>
+                    <Box w="60%" overflow={"auto"}>
+                        <Tabs variant={"soft-rounded"}>
+                            <TabList>
+                                <Tab>
+                                    This month
+                                </Tab>
+                                <Tab>
+                                    This week
+                                </Tab>
+                            </TabList>
+                            <TabPanels>
+                                <TabPanel>
+                                    <TransactionTable accountId={+accountId}/>
+                                </TabPanel>
+                                <TabPanel>
+                                    <TransactionTable accountId={+accountId}/>
+                                </TabPanel>
+                            </TabPanels>
+                        </Tabs>
+                    </Box>
+                    <Flex alignItems={"center"} justifyContent={"center"} w={"40%"}>
+                        <Doughnut
+                            options={{}}
+                            data={{
+                                labels: [
+                                    'Red',
+                                    'Blue',
+                                    'Yellow'
+                                ],
+                                datasets: [{
+                                    label: 'My First Dataset',
+                                    data: [300, 50, 100],
+                                    backgroundColor: [
+                                        'rgb(255, 99, 132)',
+                                        'rgb(54, 162, 235)',
+                                        'rgb(255, 205, 86)'
+                                    ],
+                                    hoverOffset: 4
+                                }]
+                            }}/>
+                    </Flex>
+                </Flex>
+            </Box>
+            <Tooltip label={"New transaction"} hasArrow>
+                <IconButton
+                    size={"lg"}
+                    transform={"scale(2)"}
+                    icon={<IoMdAddCircleOutline size={"32px"}/>}
+                    aria-label={"new transaction"}
+                    isRound={true}
+                    colorScheme={"blue"}
+                    position={"fixed"}
+                    bottom={50}
+                    right={50}
+                    onClick={() => onOpen()}
+                />
+            </Tooltip>
+            <TransactionModal isOpen={isOpen} onClose={onClose}/>
         </Flex>
     );
 }
