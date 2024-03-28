@@ -49,7 +49,7 @@ export default function Dashboard() {
                     Actual balance
                 </StatLabel>
                 <StatNumber fontSize={"70px"}>
-                    {data?.currentBalance || "0"} $
+                    {data?.currentBalance.toLocaleString() || "0"} $
                 </StatNumber>
             </Stat>
             <Flex gap={5} w={"100%"} my={25}>
