@@ -15,7 +15,7 @@ export default function TransactionTable({accountId}: TransactionTableProps) {
             <Thead>
                 <Tr>
                     <Th>Ref</Th>
-                    <Th>Amount</Th>
+                    <Th isNumeric>Amount</Th>
                     <Th>Type</Th>
                     <Th>Date</Th>
                 </Tr>
@@ -28,7 +28,7 @@ export default function TransactionTable({accountId}: TransactionTableProps) {
                                 <Td>
                                     {transaction.id}
                                 </Td>
-                                <Td>
+                                <Td isNumeric>
                                     {transaction.amount}
                                 </Td>
                                 <Td>
