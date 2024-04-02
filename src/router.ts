@@ -10,7 +10,6 @@ export type Path =
   | `/dashboard/:accountId/debts`
   | `/dashboard/:accountId/edit`
   | `/dashboard/:accountId/grouped-transfers`
-  | `/dashboard/:accountId/history`
   | `/dashboard/:accountId/statement`
 
 export type Params = {
@@ -18,7 +17,6 @@ export type Params = {
   '/dashboard/:accountId/debts': { accountId: string }
   '/dashboard/:accountId/edit': { accountId: string }
   '/dashboard/:accountId/grouped-transfers': { accountId: string }
-  '/dashboard/:accountId/history': { accountId: string }
   '/dashboard/:accountId/statement': { accountId: string }
 }
 
