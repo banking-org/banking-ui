@@ -85,7 +85,12 @@ export default function ExpensePanel({ onClose }: PanelTabProps) {
             </FormLabel>
             <Input type={"datetime-local"} defaultValue={formatDateTime(new Date())}/>
         </FormControl>
-        <CreatableSelect placeholder={"Select category"}/>
+        <Select placeholder={"Select category"}
+                options={data?.map(category => ({
+                    label: category.name,
+                    value: category.id,
+                }))}
+        />
         <Flex gap={2} justifyContent={"flex-end"}>
             <Button onClick={onClose}>
                 Cancel
