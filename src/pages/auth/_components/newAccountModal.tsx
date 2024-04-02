@@ -39,7 +39,7 @@ export default function NewAccountModal({isOpen, onClose}: NewAccountModalProps)
         console.log(value);
         setLoading(true);
         createAccount(value).then(res => {
-                toast({
+                res && toast({
                     title: 'Account created.',
                     description: "We've created your account for you.",
                     status: 'success',
@@ -48,6 +48,7 @@ export default function NewAccountModal({isOpen, onClose}: NewAccountModalProps)
                 })
             navigate("/dashboard/:accountId", {params: {accountId: "" + res.id}})
         }).catch(() => {
+            setLoading(false);
             toast({
                 title: 'Account failed to create.',
                 description: "Please retry later",
