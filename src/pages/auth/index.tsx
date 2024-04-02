@@ -40,6 +40,7 @@ export default function Auth() {
                 bgColor={'gray.100'}
                 h={'60%'}
                 w={'60%'}
+                minW={"1000px"}
                 borderRadius={'lg'}
                 borderColor={'gray.400'}
                 borderWidth={'1.5px'}
@@ -79,14 +80,14 @@ export default function Auth() {
                         ) : error ? (
                             error.toString()
                         ) : (
-                            data ? data.map((account) => (
+                            data?.map((account) => (
                                 <Account
-                                    number={account.id}
+                                    number={account.accountNumber}
                                     fullName={`${account.firstname} ${account.lastname}`}
                                     key={account.id}
                                     id={account.id}
                                 />
-                            )) : data
+                            )) || ":("
                         )}
                     </Flex>
                     <Flex
