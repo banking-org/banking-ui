@@ -27,3 +27,7 @@ export function createAccount(account: NewAccount): Promise<Account> {
         }
     }).then(res => JSON.parse(res.data));
 }
+
+export function editAccount(account: NewAccount, accountId: number): Promise<void> {
+    return axiosClient.put(`/account/${accountId}`, account)
+}
