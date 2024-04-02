@@ -29,5 +29,9 @@ export function createAccount(account: NewAccount): Promise<Account> {
 }
 
 export function editAccount(account: NewAccount, accountId: number): Promise<void> {
-    return axiosClient.put(`/account/${accountId}`, account)
+    return axiosClient.put(`/account/${accountId}`, JSON.stringify(account), {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
 }
