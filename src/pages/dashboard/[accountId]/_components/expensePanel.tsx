@@ -72,18 +72,18 @@ export default function ExpensePanel({ onClose }: PanelTabProps) {
 
     return <Flex direction={"column"} gap={5}>
         <FormControl>
-            <Input type={"text"} placeholder={"Expense Name"}/>
+            <Input type={"text"} placeholder={"Expense Name"} />
         </FormControl>
         <FormControl>
             <NumberInput>
-                <NumberInputField placeholder={"Amount"} {...register("amount")}/>
+                <NumberInputField placeholder={"Amount"} {...register("amount")} />
             </NumberInput>
         </FormControl>
         <FormControl>
             <FormLabel>
                 Date
             </FormLabel>
-            <Input type={"datetime-local"} defaultValue={formatDateTime(new Date())}/>
+            <Input type={"datetime-local"} defaultValue={formatDateTime(new Date())} />
         </FormControl>
         <Select placeholder={"Select category"}
                 options={data?.map(category => ({
