@@ -1,6 +1,5 @@
-import {useParams} from "@/router.ts";
+import { useParams } from "@/router.ts";
 import {
-    Box,
     Button,
     Flex,
     FormControl,
@@ -8,51 +7,68 @@ import {
     Input,
     NumberInput,
     NumberInputField,
-    useToast
+    useToast,
 } from "@chakra-ui/react";
-import {CreatableSelect} from "chakra-react-select";
-import {formatDateTime} from "@/pages/dashboard/[accountId]/_components/utils.ts";
-import {PanelTabProps} from "@/pages/dashboard/[accountId]/_components/transactionModal.tsx";
-import {useForm} from "react-hook-form";
-import {useQueryClient} from "@tanstack/react-query";
-import {useState} from "react";
-import {deposit, doWithdraw, Transaction} from "@/api/balance.ts";
+import { Select } from "chakra-react-select";
+import { formatDateTime } from "@/pages/dashboard/[accountId]/_components/utils.ts";
+import { PanelTabProps } from "@/pages/dashboard/[accountId]/_components/transactionModal.tsx";
+import { useForm } from "react-hook-form";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { getCategoriesByType } from "@/api/categories.ts";
+import { withdraw, Withdrawal } from "@/api/mutations.ts";
 
-export default function ExpensePanel({onClose}: PanelTabProps) {
-    const {accountId} = useParams("/dashboard/:accountId");
+export default function ExpensePanel({ onClose }: PanelTabProps) {
+    const { accountId } = useParams("/dashboard/:accountId");
 
-    const {register, formState, handleSubmit} = useForm<{amount: number}>()
+    const { register, handleSubmit } = useForm<{ amount: number }>();
     const queryClient = useQueryClient();
     const [isLoading, setIsLoading] = useState(false);
     const toast = useToast({
         duration: 3000,
-        position: "bottom-right"
+        position: "bottom-right",
     });
 
-    const submitHandler = (value: {amount: number}) => {
+    const { data } = useQuery({
+        queryKey: ["getCategoriesDEBIT"],
+        queryFn: () => getCategoriesByType("DEBIT"),
+    });
+
+    const withdrawMutation = useMutation({
+        mutationFn: (variables: Withdrawal) => {
+            return withdraw(variables);
+        },
+        onSuccess: () => {
+            toast({
+                title: "Request sent",
+                description: "Your transaction has been successful",
+                status: "success",
+            });
+        },
+        onSettled: () => {
+            const queryKeys = ["getBalance", "getBalanceSide", "getTransaction"];
+            queryKeys.forEach(key => queryClient.invalidateQueries({
+                queryKey: [key],
+            }));
+        },
+        onError: (error: Error) => {
+            toast({
+                title: "Error",
+                description: error.message,
+                status: "error",
+            });
+        },
+    });
+
+
+    const submitHandler = (value: { amount: number }) => {
         setIsLoading(true);
-        toast.promise(doWithdraw(+accountId, value.amount).then(() => {
-            queryClient.refetchQueries({
-                queryKey: ["getBalance", "getTransaction"]
-            })
-            onClose()
-        }), {
-            error: {
-                title: "Transaction failed",
-                description: "Please retry again",
-                isClosable: true
-            },
-            loading: {
-                title: "Transaction in progress",
-                description: "Please wait",
-                isClosable: true
-            },
-            success: {
-                title: "Transaction success",
-                description: "Your transaction was successfully done"
-            }
-        })
-    }
+        withdrawMutation.mutate({
+            accountId: +accountId,
+            amount: value.amount,
+        });
+        onClose();
+    };
 
     return <Flex direction={"column"} gap={5}>
         <FormControl>
@@ -78,5 +94,5 @@ export default function ExpensePanel({onClose}: PanelTabProps) {
                 Confirm
             </Button>
         </Flex>
-    </Flex>
+    </Flex>;
 }
