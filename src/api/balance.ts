@@ -40,13 +40,19 @@ export function getAllTransactions(accountId: number): Promise<Transaction[]> {
     return axiosClient.get(`/transaction/${accountId}`).then(res => JSON.parse(res.data));
 }
 
-export function doWithdraw(accountId: number, amount: number) {
-    return axiosClient.put("/transaction/withdraw", JSON.stringify({
+export async function doWithdraw(accountId: number, amount: number): Promise<void> {
+    const res = await axiosClient.put("/transaction/withdraw", JSON.stringify({
         accountId,
-        amount
+        amount,
     }), {
         headers: {
-            "Content-Type": "application/json"
-        }
-    }).then(res => JSON.parse(res.data));
+            "Content-Type": "application/json",
+        },
+    });
+
+    if(res.status === 406) {
+        throw new Error("This account cannot make debts. Please contact our bank for more information")
+    }
+
+    return JSON.parse(res.data);
 }
