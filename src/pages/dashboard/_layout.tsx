@@ -1,7 +1,20 @@
-import { Grid, GridItem } from '@chakra-ui/react';
-import { Outlet } from 'react-router-dom';
-import Header from './_components/header';
+import { Grid, GridItem, useToast } from "@chakra-ui/react";
+import {Outlet} from 'react-router-dom';
 import Navigation from './_components/navigation';
+import { useNavigate } from "@/router.ts";
+import { useEffect } from "react";
+
+export function Catch() {
+    const toast = useToast();
+    const navigate = useNavigate();
+    toast({
+        title: "Error",
+        description: "An error occurred, please login later. We are working on it"
+    })
+    useEffect(() => {
+        navigate("/")
+    }, []);
+}
 
 export default function DashboardLayout() {
     return (
@@ -13,7 +26,7 @@ export default function DashboardLayout() {
             h={"100vh"}
         >
             <GridItem area={"nav"}>
-                <Navigation />
+                <Navigation/>
             </GridItem>
             <GridItem area={"main"} bgColor={"gray.100"} borderTopStartRadius={'20px'} overflow={"auto"}>
                 <Outlet/>
