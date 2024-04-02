@@ -5,7 +5,7 @@ export type Account = {
     lastname:string;
     accountNumber: number;
     salary: number;
-    type: "NORMAL" | "DEBIT";
+    accountType: "NORMAL" | "DEBIT";
     birthdate: string;
     id: number;
 }
