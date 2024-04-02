@@ -33,8 +33,8 @@ export default function AccountGraph({accountId, graphType}: AccountGraphProps) 
                     {graphType === "income" ? "Income" : "Outcome"}
                 </StatLabel>
                 <SkeletonText noOfLines={1} skeletonHeight={"50px"} isLoaded>
-                    <StatNumber fontSize={50}>
-                        345,670 $
+                    <StatNumber fontSize={40} noOfLines={1}>
+                        0$
                     </StatNumber>
                 </SkeletonText>
                 <StatHelpText>
