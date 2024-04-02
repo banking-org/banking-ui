@@ -1,5 +1,5 @@
 import { doWithdraw } from "@/api/balance.ts";
-import { NewAccount, editAccount as editAcc } from "@/api/account.ts";
+import { NewAccount, putAccount} from "@/api/account.ts";
 
 export type Withdrawal = {
     accountId: number,
@@ -15,5 +15,5 @@ export function withdraw(data: Withdrawal) {
 }
 
 export function editAccount(data: AccountEditPayload) {
-    return editAcc(data.data, data.accountId);
+    return putAccount(data.data, data.accountId);
 }

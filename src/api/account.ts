@@ -28,10 +28,10 @@ export function createAccount(account: NewAccount): Promise<Account> {
     }).then(res => JSON.parse(res.data));
 }
 
-export function editAccount(account: NewAccount, accountId: number): Promise<void> {
+export function putAccount(account: NewAccount, accountId: number): Promise<unknown> {
     return axiosClient.put(`/account/${accountId}`, JSON.stringify(account), {
         headers: {
             "Content-Type": "application/json"
         }
-    })
+    }).then(res => JSON.parse(res.data))
 }

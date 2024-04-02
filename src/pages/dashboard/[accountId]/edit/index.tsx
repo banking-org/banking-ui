@@ -1,9 +1,10 @@
-import { Avatar, Box, Button, Flex, FormControl, FormLabel, Heading, Input } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { Avatar, Box, Button, Flex, FormControl, FormLabel, Heading, Input, useToast } from "@chakra-ui/react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAccountById, NewAccount } from "@/api/account.ts";
 import { useParams } from "@/router.ts";
 import EditInterest from "@/pages/dashboard/[accountId]/edit/_components/EditInterest.tsx";
 import { useForm } from "react-hook-form";
+import { editAccount } from "@/api/mutations.ts";
 
 export default function EditAccount() {
     const { accountId } = useParams("/dashboard/:accountId/edit");
@@ -16,8 +17,35 @@ export default function EditAccount() {
         defaultValues: data
     });
 
+    const toast = useToast()
+
+    const mutation = useMutation({
+        mutationFn: (payload: NewAccount) => editAccount({
+            data: payload,
+            accountId: +accountId
+        }),
+        onSettled: () => {
+
+        },
+        onSuccess: () => {
+            toast({
+                title: "Success",
+                description: "Your changes have been saved",
+                status: "success"
+            })
+        },
+        onError: () => {
+            toast({
+                title: "Error",
+                description: "Something went wrong while saving your changes. " +
+                    "Please try again later",
+                status: "error"
+            })
+        }
+    })
+
     const submitHandler = (data: NewAccount) => {
-        console.log("clicked");
+        mutation.mutate(data)
     }
 
 
@@ -55,7 +83,7 @@ export default function EditAccount() {
                 <EditInterest accountId={+accountId} />
                 <Flex mt={5}>
                     <Button
-                        isDisabled={formState.isDirty}
+                        isDisabled={!formState.isDirty}
                         colorScheme={"blue"}
                         onClick={handleSubmit(submitHandler)}
                     >
