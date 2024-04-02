@@ -27,7 +27,7 @@ import TransactionTable from "@/pages/dashboard/[accountId]/_components/transact
 
 export function Catch() {
     return <Flex justifyContent={"center"} alignItems={"center"} w={"100%"} h={"100%"}>
-        <Heading textAlign={"center"}>An error occured :( <br/> Try to reload the page</Heading>;
+        <Heading textAlign={"center"}>An error occurred :( <br/> Try to reload the page</Heading>;
     </Flex>
 }
 
@@ -52,7 +52,11 @@ export default function Dashboard() {
                     {data?.currentBalance.toLocaleString() || "0"} $
                 </StatNumber>
             </Stat>
-            <Flex gap={5} w={"100%"} my={25}>
+            <Flex gap={5} w={"100%"} my={25} direction={{
+                base: "row",
+                md: "column",
+                lg: "row"
+            }}>
                 <AccountGraph accountId={+accountId} graphType={"income"}/>
                 <AccountGraph accountId={+accountId} graphType={"outcome"}/>
             </Flex>
