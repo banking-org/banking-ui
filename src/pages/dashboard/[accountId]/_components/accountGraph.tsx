@@ -1,3 +1,4 @@
+import { CommonData } from "@/api/dashboard.ts";
 import {
     Box,
     Flex,
@@ -12,11 +13,11 @@ import {
 import {Line} from "react-chartjs-2";
 
 type AccountGraphProps = {
-    accountId: number;
+    data: CommonData;
     graphType: "income" | "outcome";
 }
 
-export default function AccountGraph({accountId, graphType}: AccountGraphProps) {
+export default function AccountGraph({data, graphType}: AccountGraphProps) {
     return <Flex
         backgroundColor={"gray.200"}
         shadow={"lg"}
@@ -34,7 +35,7 @@ export default function AccountGraph({accountId, graphType}: AccountGraphProps) 
                 </StatLabel>
                 <SkeletonText noOfLines={1} skeletonHeight={"50px"} isLoaded>
                     <StatNumber fontSize={40} noOfLines={1}>
-                        0$
+                        {data?.current || 0}$
                     </StatNumber>
                 </SkeletonText>
                 <StatHelpText>
@@ -48,7 +49,7 @@ export default function AccountGraph({accountId, graphType}: AccountGraphProps) 
                 data={{
                     datasets: [
                         {
-                            data: [65, 59, 80, 81, 56, 55],
+                            data: data?.insight?.map(v => v.amount),
                             label: "ur money",
                             borderColor: graphType === "income" ? "rgb(75, 192, 192)" : "red",
                             //tension: 0.5
@@ -61,6 +62,12 @@ export default function AccountGraph({accountId, graphType}: AccountGraphProps) 
                         "April",
                         "May",
                         "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December"
                     ],
                 }}
                 options={{
