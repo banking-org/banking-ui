@@ -24,6 +24,7 @@ import {Doughnut} from "react-chartjs-2";
 import {IoMdAddCircleOutline} from "react-icons/io";
 import TransactionModal from "@/pages/dashboard/[accountId]/_components/transactionModal.tsx";
 import TransactionTable from "@/pages/dashboard/[accountId]/_components/transactionTable.tsx";
+import { Graph } from "./_components/Graph";
 
 export function Catch() {
     return <Flex justifyContent={"center"} alignItems={"center"} w={"100%"} h={"100%"}>
@@ -57,8 +58,7 @@ export default function Dashboard() {
                 md: "column",
                 lg: "row"
             }}>
-                <AccountGraph accountId={+accountId} graphType={"income"}/>
-                <AccountGraph accountId={+accountId} graphType={"outcome"}/>
+                <Graph accountId={+accountId} />
             </Flex>
             <Box w={"100%"}>
                 <Heading>
