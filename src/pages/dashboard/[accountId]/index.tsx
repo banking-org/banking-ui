@@ -7,19 +7,13 @@ import {
     Stat,
     StatLabel,
     StatNumber, Tab,
-    Table,
-    TableContainer, TabList, TabPanel, TabPanels, Tabs,
-    Tbody,
-    Td,
-    Th,
-    Thead,
+    TabList, TabPanel, TabPanels, Tabs,
     Tooltip,
-    Tr, useDisclosure
+    useDisclosure
 } from "@chakra-ui/react";
 import {useQuery} from "@tanstack/react-query";
 import "chart.js/auto";
-import AccountGraph from "@/pages/dashboard/[accountId]/_components/accountGraph.tsx";
-import {getAllTransactions, getBalanceByAccountId} from "@/api/balance.ts";
+import {getBalanceByAccountId} from "@/api/balance.ts";
 import {Doughnut} from "react-chartjs-2";
 import {IoMdAddCircleOutline} from "react-icons/io";
 import TransactionModal from "@/pages/dashboard/[accountId]/_components/transactionModal.tsx";
@@ -34,7 +28,7 @@ export function Catch() {
 
 export default function Dashboard() {
     const {accountId} = useParams("/dashboard/:accountId");
-    const {data, isLoading, error} = useQuery({
+    const {data} = useQuery({
         queryKey: ["getBalance"],
         queryFn: () => getBalanceByAccountId(+accountId),
     });
