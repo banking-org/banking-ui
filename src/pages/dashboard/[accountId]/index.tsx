@@ -7,23 +7,18 @@ import {
     Stat,
     StatLabel,
     StatNumber, Tab,
-    Table,
-    TableContainer, TabList, TabPanel, TabPanels, Tabs,
-    Tbody,
-    Td,
-    Th,
-    Thead,
+    TabList, TabPanel, TabPanels, Tabs,
     Tooltip,
-    Tr, useDisclosure
+    useDisclosure
 } from "@chakra-ui/react";
 import {useQuery} from "@tanstack/react-query";
 import "chart.js/auto";
-import AccountGraph from "@/pages/dashboard/[accountId]/_components/accountGraph.tsx";
-import {getAllTransactions, getBalanceByAccountId} from "@/api/balance.ts";
+import {getBalanceByAccountId} from "@/api/balance.ts";
 import {Doughnut} from "react-chartjs-2";
 import {IoMdAddCircleOutline} from "react-icons/io";
 import TransactionModal from "@/pages/dashboard/[accountId]/_components/transactionModal.tsx";
 import TransactionTable from "@/pages/dashboard/[accountId]/_components/transactionTable.tsx";
+import { Graph } from "./_components/Graph";
 
 export function Catch() {
     return <Flex justifyContent={"center"} alignItems={"center"} w={"100%"} h={"100%"}>
@@ -33,7 +28,7 @@ export function Catch() {
 
 export default function Dashboard() {
     const {accountId} = useParams("/dashboard/:accountId");
-    const {data, isLoading, error} = useQuery({
+    const {data} = useQuery({
         queryKey: ["getBalance"],
         queryFn: () => getBalanceByAccountId(+accountId),
     });
@@ -57,8 +52,7 @@ export default function Dashboard() {
                 md: "column",
                 lg: "row"
             }}>
-                <AccountGraph accountId={+accountId} graphType={"income"}/>
-                <AccountGraph accountId={+accountId} graphType={"outcome"}/>
+                <Graph accountId={+accountId} />
             </Flex>
             <Box w={"100%"}>
                 <Heading>
