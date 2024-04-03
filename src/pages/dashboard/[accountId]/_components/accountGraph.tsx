@@ -55,20 +55,7 @@ export default function AccountGraph({data, graphType}: AccountGraphProps) {
                             //tension: 0.5
                         },
                     ],
-                    labels: [
-                        "January",
-                        "February",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
-                        "July",
-                        "August",
-                        "September",
-                        "October",
-                        "November",
-                        "December"
-                    ],
+                    labels: data?.insight?.map(v => v.iteration),
                 }}
                 options={{
                     plugins: {
