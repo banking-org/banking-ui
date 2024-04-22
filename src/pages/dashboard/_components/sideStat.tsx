@@ -23,7 +23,7 @@ export default function SideStat({ accountId, show }: SideStatProps) {
         borderRadius={"lg"}
         p={show ? 4 : 0}
         transition={"0.7s"}
-        height={show ? "180px" : "0px"}
+        maxHeight={show ? "100%" : "0"}
         overflow={"hidden"}
         opacity={show ? 1 : 0}
     >
