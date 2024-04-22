@@ -20,7 +20,7 @@ export const Graph = ({ accountId }: Props) => {
             />
             <AccountGraph
                 data={data?.outcomes || ({} as CommonData)}
-                graphType={"income"}
+                graphType={"outcome"}
             />
         </>
     );
