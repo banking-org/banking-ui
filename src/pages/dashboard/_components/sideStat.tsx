@@ -33,16 +33,19 @@ export default function SideStat({ accountId, show }: SideStatProps) {
         </Stat>
         <StatGroup>
             <Stat>
-                <StatLabel><StatArrow type="increase" transform={"rotate(180deg)"} />Income</StatLabel>
-                <StatNumber noOfLines={1}>345,670 $</StatNumber>
-                <StatHelpText>
-                    This month
-                </StatHelpText>
+                <StatLabel>
+                    Witdhraws
+                </StatLabel>
+                <StatNumber noOfLines={1}>{data?.withdraws} $</StatNumber>
             </Stat>
 
             <Stat>
-                <StatLabel><StatArrow type="decrease" transform={"rotate(180deg)"} />Outcome</StatLabel>
-                <StatNumber>45 $</StatNumber>
+                <StatLabel>
+                    Interests
+                </StatLabel>
+                <StatNumber>
+                    {data?.interests || "0"} $
+                </StatNumber>
             </Stat>
         </StatGroup>
     </Box>;
