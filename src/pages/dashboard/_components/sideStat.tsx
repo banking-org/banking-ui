@@ -1,9 +1,7 @@
 import {
     Box,
     Stat,
-    StatArrow,
     StatGroup,
-    StatHelpText,
     StatLabel,
     StatNumber,
 } from "@chakra-ui/react";
@@ -17,7 +15,7 @@ type SideStatProps = {
 };
 
 export default function SideStat({ accountId, show }: SideStatProps) {
-    const { data, isLoading, error } = useQuery({
+    const { data } = useQuery({
         queryKey: ["getBalanceSide"],
         queryFn: () => getBalanceByAccountId(accountId),
     });
