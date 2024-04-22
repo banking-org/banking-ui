@@ -1,4 +1,14 @@
-import { Avatar, Box, Button, Flex, FormControl, FormLabel, Heading, Input, useToast } from "@chakra-ui/react";
+import {
+    Avatar,
+    Box,
+    Button,
+    Flex,
+    FormControl,
+    FormLabel,
+    Heading,
+    Input,
+    useToast,
+} from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAccountById, NewAccount } from "@/api/account.ts";
 import { useParams } from "@/router.ts";
@@ -14,83 +24,86 @@ export default function EditAccount() {
     });
 
     const { register, handleSubmit, formState } = useForm<NewAccount>({
-        defaultValues: data
+        defaultValues: data,
     });
 
-    const toast = useToast()
+    const toast = useToast();
 
     const mutation = useMutation({
-        mutationFn: (payload: NewAccount) => editAccount({
-            data: payload,
-            accountId: +accountId
-        }),
-        onSettled: () => {
-
-        },
+        mutationFn: (payload: NewAccount) =>
+            editAccount({
+                data: payload,
+                accountId: +accountId,
+            }),
+        onSettled: () => {},
         onSuccess: () => {
             toast({
                 title: "Success",
                 description: "Your changes have been saved",
-                status: "success"
-            })
+                status: "success",
+            });
         },
         onError: () => {
             toast({
                 title: "Error",
-                description: "Something went wrong while saving your changes. " +
+                description:
+                    "Something went wrong while saving your changes. " +
                     "Please try again later",
-                status: "error"
-            })
-        }
-    })
+                status: "error",
+            });
+        },
+    });
 
     const submitHandler = (data: NewAccount) => {
-        mutation.mutate(data)
-    }
+        mutation.mutate(data);
+    };
 
-
-    return <Flex p={8} direction={"column"} gap={8}>
-        <Heading>
-            Edit your account
-        </Heading>
-        <Flex gap={8}>
-            <Box>
-                <Avatar name={data && `${data?.firstname} ${data?.lastname}`} size={"2xl"} />
-            </Box>
-            <Box maxW={"500px"} minW={"250px"} w={"100%"}>
-                <FormControl>
-                    <FormLabel>Firstname</FormLabel>
-                    <Input placeholder={data?.firstname} {...register("firstname", {required: true})}/>
-                </FormControl>
-                <FormControl>
-                    <FormLabel>
-                        Lastname
-                    </FormLabel>
-                    <Input
-                        placeholder={data?.lastname}
-                        {...register("lastname", {required: true})}
-                        isInvalid={!!formState.errors?.lastname}
+    return (
+        <Flex p={8} direction={"column"} gap={8}>
+            <Heading>Edit your account</Heading>
+            <Flex gap={8}>
+                <Box>
+                    <Avatar
+                        name={data && `${data?.firstname} ${data?.lastname}`}
+                        size={"2xl"}
                     />
-                </FormControl>
-                <FormControl>
-                    <FormLabel>Salary</FormLabel>
-                    <Input
-                        placeholder={data?.salary.toLocaleString()}
-                        {...register("salary", {required: true})}
-                        isInvalid={!!formState.errors?.salary}
-                    />
-                </FormControl>
-                <EditInterest accountId={+accountId} />
-                <Flex mt={5}>
-                    <Button
-                        isDisabled={!formState.isDirty}
-                        colorScheme={"blue"}
-                        onClick={handleSubmit(submitHandler)}
-                    >
-                        Done
-                    </Button>
-                </Flex>
-            </Box>
+                </Box>
+                <Box maxW={"500px"} minW={"250px"} w={"100%"}>
+                    <FormControl>
+                        <FormLabel>Firstname</FormLabel>
+                        <Input
+                            placeholder={data?.firstname}
+                            {...register("firstname", { required: true })}
+                        />
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>Lastname</FormLabel>
+                        <Input
+                            placeholder={data?.lastname}
+                            {...register("lastname", { required: true })}
+                            isInvalid={!!formState.errors?.lastname}
+                        />
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>Salary</FormLabel>
+                        <Input
+                            placeholder={data?.salary.toLocaleString()}
+                            {...register("salary", { required: true })}
+                            isInvalid={!!formState.errors?.salary}
+                        />
+                    </FormControl>
+                    <EditInterest accountId={+accountId} />
+                    <Flex mt={5}>
+                        <Button
+                            isDisabled={!formState.isDirty}
+                            colorScheme={"blue"}
+                            onClick={handleSubmit(submitHandler)}
+                        >
+                            Done
+                        </Button>
+                    </Flex>
+                </Box>
+            </Flex>
         </Flex>
-    </Flex>;
+    );
 }

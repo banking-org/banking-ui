@@ -1,5 +1,14 @@
 import { useParams } from "@/router.ts";
-import { Button, Flex, FormControl, FormLabel, Input, NumberInput, NumberInputField, useToast } from "@chakra-ui/react";
+import {
+    Button,
+    Flex,
+    FormControl,
+    FormLabel,
+    Input,
+    NumberInput,
+    NumberInputField,
+    useToast,
+} from "@chakra-ui/react";
 import { Select } from "chakra-react-select";
 import { formatDateTime } from "@/pages/dashboard/[accountId]/_components/utils.ts";
 import { PanelTabProps } from "@/pages/dashboard/[accountId]/_components/transactionModal.tsx";
@@ -27,12 +36,15 @@ export default function IncomePanel({ onClose }: PanelTabProps) {
     const mutation = useMutation({
         mutationFn: (value: Transaction) => deposit(+accountId, value),
         onSettled: () => {
-            const queryKeys = ["getBalance", "getBalanceSide", "getTransaction"];
-            queryKeys.forEach(key => {
+            const queryKeys = [
+                "getBalance",
+                "getBalanceSide",
+                "getTransaction",
+            ];
+            queryKeys.forEach((key) => {
                 queryClient.invalidateQueries({
-                        queryKey: [key],
-                    },
-                );
+                    queryKey: [key],
+                });
             });
         },
         onSuccess: () => {
@@ -56,34 +68,48 @@ export default function IncomePanel({ onClose }: PanelTabProps) {
         onClose();
     };
 
-    return <Flex direction={"column"} gap={5}>
-        <FormControl>
-            <Input type={"text"} placeholder={"Income Name"} {...register("label")} />
-        </FormControl>
-        <FormControl>
-            <NumberInput>
-                <NumberInputField placeholder={"Amount"} {...register("amount", { valueAsNumber: true })} />
-            </NumberInput>
-        </FormControl>
-        <FormControl>
-            <FormLabel>
-                Date
-            </FormLabel>
-            <Input type={"datetime-local"} defaultValue={formatDateTime(new Date())} {...register("effectDate")} />
-        </FormControl>
-        <Select placeholder={"Select category"}
-                options={data?.map(category => ({
+    return (
+        <Flex direction={"column"} gap={5}>
+            <FormControl>
+                <Input
+                    type={"text"}
+                    placeholder={"Income Name"}
+                    {...register("label")}
+                />
+            </FormControl>
+            <FormControl>
+                <NumberInput>
+                    <NumberInputField
+                        placeholder={"Amount"}
+                        {...register("amount", { valueAsNumber: true })}
+                    />
+                </NumberInput>
+            </FormControl>
+            <FormControl>
+                <FormLabel>Date</FormLabel>
+                <Input
+                    type={"datetime-local"}
+                    defaultValue={formatDateTime(new Date())}
+                    {...register("effectDate")}
+                />
+            </FormControl>
+            <Select
+                placeholder={"Select category"}
+                options={data?.map((category) => ({
                     label: category.name,
                     value: category.id,
                 }))}
-        />
-        <Flex gap={2} justifyContent={"flex-end"}>
-            <Button onClick={onClose}>
-                Cancel
-            </Button>
-            <Button colorScheme={"blue"} onClick={handleSubmit(submitHandler)} isLoading={isLoading}>
-                Confirm
-            </Button>
+            />
+            <Flex gap={2} justifyContent={"flex-end"}>
+                <Button onClick={onClose}>Cancel</Button>
+                <Button
+                    colorScheme={"blue"}
+                    onClick={handleSubmit(submitHandler)}
+                    isLoading={isLoading}
+                >
+                    Confirm
+                </Button>
+            </Flex>
         </Flex>
-    </Flex>;
+    );
 }

@@ -13,14 +13,18 @@ export default function EditInterest({ accountId }: { accountId: number }) {
         queryFn: () => getInterest(accountId),
     });
 
-    return account?.accountType === "DEBIT" ? <Box w={"100%"}>
-        <FormControl>
-            <FormLabel>First interest</FormLabel>
-            <Input placeholder={data?.firstInterest.toString()} />
-        </FormControl>
-        <FormControl>
-            <FormLabel>Effective interest</FormLabel>
-            <Input placeholder={data?.effectiveInterest.toString()} />
-        </FormControl>
-    </Box> : <></>;
+    return account?.accountType === "DEBIT" ? (
+        <Box w={"100%"}>
+            <FormControl>
+                <FormLabel>First interest</FormLabel>
+                <Input placeholder={data?.firstInterest.toString()} />
+            </FormControl>
+            <FormControl>
+                <FormLabel>Effective interest</FormLabel>
+                <Input placeholder={data?.effectiveInterest.toString()} />
+            </FormControl>
+        </Box>
+    ) : (
+        <></>
+    );
 }

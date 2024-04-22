@@ -5,13 +5,16 @@ type Category = {
     name: string;
     comments: string;
     onlyOn: "DEBIT" | "CREDIT";
-}
+};
 
-
-export function getCategoriesByType(transactionType: "DEBIT" | "CREDIT"): Promise<Category[]>{
-    return axiosClient.get("/categories", {
-        params: {
-            type: transactionType
-        }
-    }).then(res => JSON.parse(res.data));
+export function getCategoriesByType(
+    transactionType: "DEBIT" | "CREDIT",
+): Promise<Category[]> {
+    return axiosClient
+        .get("/categories", {
+            params: {
+                type: transactionType,
+            },
+        })
+        .then((res) => JSON.parse(res.data));
 }

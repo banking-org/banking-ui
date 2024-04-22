@@ -83,7 +83,7 @@ export default function Statement() {
                                 if (dates.length > 1) {
                                     setDates(date);
                                 } else {
-                                    setDates(prev => [...prev, ...date]);
+                                    setDates((prev) => [...prev, ...date]);
                                     mutation.mutate();
                                 }
                             }}
@@ -91,48 +91,47 @@ export default function Statement() {
                     </InputGroup>
                 </Box>
             </Flex>
-            {
-                data?.length === 0 ? <Flex
-                        w={"100%"}
-                        h={"100%"}
-                        alignItems={"center"}
-                        justifyContent={"center"}
-                    >
-                        <Heading>
-                            No data available
-                        </Heading>
-                    </Flex> :
-                    <TableContainer>
-                        <Table>
-                            <Thead>
-                                <Tr>
-                                    <Th>Date</Th>
-                                    <Th>Reference</Th>
-                                    <Th>Label</Th>
-                                    <Th>Credit</Th>
-                                    <Th>Debit</Th>
-                                    <Th>Balance</Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                {data ? (
-                                    data?.map((e, i) => (
-                                        <Tr>
-                                            <Td>{e.date.toString()}</Td>
-                                            <Td>{e.reference}</Td>
-                                            <Td>{e.label}</Td>
-                                            <Td>{e.credit}</Td>
-                                            <Td>{e.debit}</Td>
-                                            <Td>{e.balance}</Td>
-                                        </Tr>
-                                    ))
-                                ) : (
-                                    <></>
-                                )}
-                            </Tbody>
-                        </Table>
-                    </TableContainer>
-            }
+            {data?.length === 0 ? (
+                <Flex
+                    w={"100%"}
+                    h={"100%"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                >
+                    <Heading>No data available</Heading>
+                </Flex>
+            ) : (
+                <TableContainer>
+                    <Table>
+                        <Thead>
+                            <Tr>
+                                <Th>Date</Th>
+                                <Th>Reference</Th>
+                                <Th>Label</Th>
+                                <Th>Credit</Th>
+                                <Th>Debit</Th>
+                                <Th>Balance</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {data ? (
+                                data?.map((e, i) => (
+                                    <Tr>
+                                        <Td>{e.date.toString()}</Td>
+                                        <Td>{e.reference}</Td>
+                                        <Td>{e.label}</Td>
+                                        <Td>{e.credit}</Td>
+                                        <Td>{e.debit}</Td>
+                                        <Td>{e.balance}</Td>
+                                    </Tr>
+                                ))
+                            ) : (
+                                <></>
+                            )}
+                        </Tbody>
+                    </Table>
+                </TableContainer>
+            )}
         </Flex>
     );
 }

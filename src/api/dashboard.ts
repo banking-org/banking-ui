@@ -15,7 +15,12 @@ export interface SumDebitsAndCreditsData {
     outcomes: CommonData;
 }
 
-export const getSumDebitsAndCreditsData = async (accountId: number, sort: 'days' | 'month' = 'days'): Promise<SumDebitsAndCreditsData> => {
-    const { data } = await axiosClient.get(`/dash/sum_debits_and_credits/${accountId}?sort=${sort}`);
+export const getSumDebitsAndCreditsData = async (
+    accountId: number,
+    sort: "days" | "month" = "days",
+): Promise<SumDebitsAndCreditsData> => {
+    const { data } = await axiosClient.get(
+        `/dash/sum_debits_and_credits/${accountId}?sort=${sort}`,
+    );
     return JSON.parse(data);
-}
+};

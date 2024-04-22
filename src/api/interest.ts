@@ -5,8 +5,10 @@ export type Interest = {
     firstInterest: number;
     effectiveInterest: number;
     maxDaysPayment: number;
-}
+};
 
 export function getInterest(accountId: number): Promise<Interest> {
-    return axiosClient.get(`/interest/${accountId}`).then(res => JSON.parse(res.data))
+    return axiosClient
+        .get(`/interest/${accountId}`)
+        .then((res) => JSON.parse(res.data));
 }

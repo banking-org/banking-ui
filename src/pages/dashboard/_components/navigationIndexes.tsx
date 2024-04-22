@@ -11,8 +11,8 @@ export type Navigation<T extends Path> = {
     path: {
         url: T;
         params?: T extends keyof Params ? Params[T] : undefined;
-    }
-}
+    };
+};
 
 export const navigations = (accountId: string | number): Navigation<Path>[] => [
     {
@@ -49,8 +49,8 @@ export const navigations = (accountId: string | number): Navigation<Path>[] => [
         path: {
             url: "/dashboard/:accountId/grouped-transfers",
             params: {
-                accountId: accountId + ""
-            }
-        }
+                accountId: accountId + "",
+            },
+        },
     },
 ];

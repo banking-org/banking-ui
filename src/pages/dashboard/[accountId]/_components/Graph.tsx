@@ -8,14 +8,20 @@ interface Props {
 
 export const Graph = ({ accountId }: Props) => {
     const { data } = useQuery({
-        queryKey: [ "graph-debits-and-credits" ],
-        queryFn: () => getSumDebitsAndCreditsData(accountId)
+        queryKey: ["graph-debits-and-credits"],
+        queryFn: () => getSumDebitsAndCreditsData(accountId),
     });
 
     return (
         <>
-            <AccountGraph data={data?.incomes || {} as CommonData} graphType={"income"}/>
-            <AccountGraph data={data?.outcomes || {} as CommonData} graphType={"income"}/>
+            <AccountGraph
+                data={data?.incomes || ({} as CommonData)}
+                graphType={"income"}
+            />
+            <AccountGraph
+                data={data?.outcomes || ({} as CommonData)}
+                graphType={"income"}
+            />
         </>
-    )
-}
+    );
+};

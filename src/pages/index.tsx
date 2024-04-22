@@ -1,11 +1,11 @@
-import {useNavigate} from "@/router.ts";
-import {useEffect} from "react";
+import { useNavigate } from "@/router.ts";
+import { useEffect } from "react";
 
 function Home() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     useEffect(() => {
-        navigate("/auth")
+        navigate("/auth");
     });
 }
 
-export default Home
+export default Home;

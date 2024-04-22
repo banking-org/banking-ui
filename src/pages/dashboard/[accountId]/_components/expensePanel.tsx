@@ -46,10 +46,16 @@ export default function ExpensePanel({ onClose }: PanelTabProps) {
             });
         },
         onSettled: () => {
-            const queryKeys = ["getBalance", "getBalanceSide", "getTransaction"];
-            queryKeys.forEach(key => queryClient.invalidateQueries({
-                queryKey: [key],
-            }));
+            const queryKeys = [
+                "getBalance",
+                "getBalanceSide",
+                "getTransaction",
+            ];
+            queryKeys.forEach((key) =>
+                queryClient.invalidateQueries({
+                    queryKey: [key],
+                }),
+            );
         },
         onError: (error: Error) => {
             toast({
@@ -60,7 +66,6 @@ export default function ExpensePanel({ onClose }: PanelTabProps) {
         },
     });
 
-
     const submitHandler = (value: { amount: number }) => {
         setIsLoading(true);
         withdrawMutation.mutate({
@@ -70,34 +75,42 @@ export default function ExpensePanel({ onClose }: PanelTabProps) {
         onClose();
     };
 
-    return <Flex direction={"column"} gap={5}>
-        <FormControl>
-            <Input type={"text"} placeholder={"Expense Name"} />
-        </FormControl>
-        <FormControl>
-            <NumberInput>
-                <NumberInputField placeholder={"Amount"} {...register("amount")} />
-            </NumberInput>
-        </FormControl>
-        <FormControl>
-            <FormLabel>
-                Date
-            </FormLabel>
-            <Input type={"datetime-local"} defaultValue={formatDateTime(new Date())} />
-        </FormControl>
-        <Select placeholder={"Select category"}
-                options={data?.map(category => ({
+    return (
+        <Flex direction={"column"} gap={5}>
+            <FormControl>
+                <Input type={"text"} placeholder={"Expense Name"} />
+            </FormControl>
+            <FormControl>
+                <NumberInput>
+                    <NumberInputField
+                        placeholder={"Amount"}
+                        {...register("amount")}
+                    />
+                </NumberInput>
+            </FormControl>
+            <FormControl>
+                <FormLabel>Date</FormLabel>
+                <Input
+                    type={"datetime-local"}
+                    defaultValue={formatDateTime(new Date())}
+                />
+            </FormControl>
+            <Select
+                placeholder={"Select category"}
+                options={data?.map((category) => ({
                     label: category.name,
                     value: category.id,
                 }))}
-        />
-        <Flex gap={2} justifyContent={"flex-end"}>
-            <Button onClick={onClose}>
-                Cancel
-            </Button>
-            <Button colorScheme={"blue"} onClick={handleSubmit(submitHandler)}>
-                Confirm
-            </Button>
+            />
+            <Flex gap={2} justifyContent={"flex-end"}>
+                <Button onClick={onClose}>Cancel</Button>
+                <Button
+                    colorScheme={"blue"}
+                    onClick={handleSubmit(submitHandler)}
+                >
+                    Confirm
+                </Button>
+            </Flex>
         </Flex>
-    </Flex>;
+    );
 }
