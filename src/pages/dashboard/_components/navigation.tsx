@@ -1,12 +1,5 @@
 import { useNavigate, useParams } from "@/router";
-import {
-    Avatar,
-    Button,
-    Flex,
-    Heading,
-    Skeleton,
-    Text,
-} from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import SideStat from "./sideStat";
 import NavigationLink from "./navigationLink";
 import { useAtom } from "jotai";
