@@ -18,10 +18,10 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import "chart.js/auto";
 import { getBalanceByAccountId } from "@/api/balance.ts";
-import { Doughnut } from "react-chartjs-2";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import TransactionModal from "@/pages/dashboard/[accountId]/_components/transactionModal.tsx";
-import TransactionTable from "@/pages/dashboard/[accountId]/_components/transactionTable.tsx";
+import TransactionModal from "./_components/transactionModal.tsx";
+import TransactionTable from "./_components/transactionTable.tsx";
+import { PieChart } from "./_components/pieChart.tsx";
 import { Graph } from "./_components/Graph";
 
 export function Catch() {
@@ -96,30 +96,7 @@ export default function Dashboard() {
                             </TabPanels>
                         </Tabs>
                     </Box>
-                    <Flex
-                        alignItems={"center"}
-                        justifyContent={"center"}
-                        w={"40%"}
-                    >
-                        <Doughnut
-                            options={{}}
-                            data={{
-                                labels: ["Red", "Blue", "Yellow"],
-                                datasets: [
-                                    {
-                                        label: "My First Dataset",
-                                        data: [300, 50, 100],
-                                        backgroundColor: [
-                                            "rgb(255, 99, 132)",
-                                            "rgb(54, 162, 235)",
-                                            "rgb(255, 205, 86)",
-                                        ],
-                                        hoverOffset: 4,
-                                    },
-                                ],
-                            }}
-                        />
-                    </Flex>
+                    <PieChart accountId={+accountId} />
                 </Flex>
             </Box>
             <Tooltip label={"New transaction"} hasArrow>
