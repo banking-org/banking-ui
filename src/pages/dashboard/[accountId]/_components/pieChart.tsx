@@ -1,4 +1,6 @@
+import { getSumByCategory } from "@/api/dashboard.ts";
 import { Flex } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import { Doughnut } from "react-chartjs-2";
 
 interface Props {
@@ -6,6 +8,11 @@ interface Props {
 }
 
 export const PieChart = ({ accountId }: Props) => {
+    const { data } = useQuery({
+        queryKey: ["pie-chart-categories", accountId],
+        queryFn: () => getSumByCategory(accountId)
+    });
+
     return (
         <Flex
             alignItems={"center"}
@@ -15,11 +22,11 @@ export const PieChart = ({ accountId }: Props) => {
             <Doughnut
                 options={{}}
                 data={{
-                    labels: ["Red", "Blue", "Yellow"],
+                    labels: data?.map(v => v.categoryName) || [],
                     datasets: [
                         {
-                            label: "My First Dataset",
-                            data: [300, 50, 100],
+                            label: "Category",
+                            data: data?.map(v => v.totalAmount) || [],
                             backgroundColor: [
                                 "rgb(255, 99, 132)",
                                 "rgb(54, 162, 235)",
